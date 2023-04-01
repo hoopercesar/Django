@@ -1,3 +1,4 @@
+{% extends './layouts/navegador.html' %} {% block content %}
 <h1>Projects</h1>
 
 <p>Estos son los proyectos</p>
@@ -7,4 +8,4 @@
 {% for proyecto in proyectos %}
 <h2>{{proyecto.name}}</h2>
 
-{% endfor %}
+{% endfor %} {% endblock %}
