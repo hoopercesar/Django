@@ -1,5 +1,5 @@
 from django import forms
 
-class CreateNewTask(): 
-    title = forms.CharField(label='titulo tarea', max_length=200)
-    description = forms.Textarea(label='decripción tarea', required=False)
+class CreateNewTask(forms.Form): 
+    title = forms.CharField(label='Titulo Tarea', max_length=200)
+    description = forms.CharField(widget=forms.Textarea)
