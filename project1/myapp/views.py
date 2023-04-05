@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Projects, Task
 from django.shortcuts import render, redirect
-from .forms import CreateNewTask
+from .forms import CreateNewTask, CreateNewProject
 
 # Create your views here.
 def index(request):
@@ -34,6 +34,7 @@ def task(request):
         'tareas': task,
     })
 
+# crea nueva tarea
 def create_task(request):
     if request.method == 'GET':
         # show interface
@@ -47,6 +48,18 @@ def create_task(request):
             project_id = 2,
             )
         return redirect('/task/')
-    
+
+# crea nuevo proyecto  
 def create_project(request):
-    return render(request, 'create_project.html')
+    if request.method == 'GET':
+        # muentra interface
+        return render(request, 'create_project.html', {
+         'form': CreateNewProject()   
+        })
+    else: 
+        Projects.objects.create(
+            name = request.POST['name']            
+        )
+        return redirect('projects')
+
+
