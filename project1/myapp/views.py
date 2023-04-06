@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Projects, Task
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateNewTask, CreateNewProject
 
 # Create your views here.
@@ -22,7 +22,7 @@ def hello(request, username):
 def projects(request):
     projects = list(Projects.objects.values())
     # return JsonResponse(projects, safe=False)
-    return render(request, 'projects.html', {
+    return render(request, 'projects', {
         'proyectos': projects,
     })
 
@@ -63,3 +63,7 @@ def create_project(request):
         return redirect('projects')
 
 
+def project_detail(request, id):
+    project = get_object_or_404(Projects, id=id)
+    print(project)
+    return render(request, 'projects/detail.html')
