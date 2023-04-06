@@ -1,0 +1,14 @@
+{% extends './layouts/navegador.html' %} {% block content %}
+<h1>Projects</h1>
+
+<p>Estos son los proyectos</p>
+
+<h4>Bucle for para mostrar los elementos de una lista</h4>
+
+{% for proyecto in proyectos %}
+<article class="card">
+  <h2></h2>
+  <a href="">{{proyecto.name}}</a>
+</article>
+
+{% endfor %} {% endblock %}
