@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 # Create your views here.
 def signup(request):
@@ -19,14 +20,16 @@ def signup(request):
                 print('password correcto')
                 user = User.objects.create_user(username=request.POST['username'],
                                                 password=request.POST['password1'])
+                
                 user.save()
-                print(user)
+                print('user = ', user)
+                login(request, user)
                 # return HttpResponse('Usuario creado')
-                return render(request, 'login.html', {
-                    # 'form' : AuthenticationForm,
-                    'mensaje' : 'Usuario Creado Correctamente. Ingresa a tu cuenta',
-                })
-           except:
+                return redirect('tasks')
+           except IntegrityError:
+                   
+               # el integrityError aparece cuando se registra un usuario
+               # con un nombre que ya existe en la base de datos
                return render(request, 'signup.html', {
                     'form' : UserCreationForm,
                     'mensaje' : 'Usuario ya existe',
@@ -42,17 +45,7 @@ def signup(request):
 def tasks(request):
     return render(request, 'tasks.html')
 
-def login(request):
-    return render(request, 'login.html')
-    # usuario = request.POST['usuario'],
-    # password = request.POST['password'],
-    # user = authenticate(request, username=usuario, password=password)
-    # if user is not None:
-    #     return HttpResponse('Bienvenido')
-    # else:
-    #     return render(request, 'login.html', {
-    #         'mensaje': 'Usuario incorrecto'
-    #     })
+
 
 def home(request):
     return render(request, 'home.html')
