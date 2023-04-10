@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from .forms import TaskForm
 
 # Create your views here.
 def signup(request):
@@ -23,9 +24,9 @@ def signup(request):
                 
                 user.save()
                 print('user = ', user)
-                login(request, user)
+                # login(request, user)
                 # return HttpResponse('Usuario creado')
-                return redirect('tasks')
+                return redirect('signin')
            except IntegrityError:
                    
                # el integrityError aparece cuando se registra un usuario
@@ -45,7 +46,45 @@ def signup(request):
 def tasks(request):
     return render(request, 'tasks.html')
 
-
+def create_task(request):
+    return render(request, 'create_task.html', {
+        'form': TaskForm
+    })
 
 def home(request):
     return render(request, 'home.html')
+
+# para cerrar la sesión
+def signout(request):
+    logout(request)
+    return redirect('home')
+
+# para entrar en la sesión del usuario
+def signin(request):
+    if request.method == 'GET':
+        return render(request, 'signin.html', {
+            'form': AuthenticationForm
+        })
+    else:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        # usuario = False
+        print(request)
+        if user is not None: 
+            login(request, user)
+            return redirect('tasks')
+        else:
+            return render(request, 'signin.html', {
+                'form': AuthenticationForm,
+                'error': 'Usuario incorrecto',
+            })
+
+            
+
+
+
+
+
+
+    
