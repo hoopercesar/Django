@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from .forms import TaskForm
+from .models import Task
 
 # Create your views here.
 def signup(request):
@@ -44,12 +45,34 @@ def signup(request):
                 })
     
 def tasks(request):
-    return render(request, 'tasks.html')
+    tasks = Task.objects.filter(user=request.user)
+    print(tasks)
+    return render(request, 'tasks.html', {
+        'tasks' : tasks,
+    })
 
 def create_task(request):
-    return render(request, 'create_task.html', {
-        'form': TaskForm
-    })
+    if request.method == 'GET':
+        return render(request, 'create_task.html', {
+                'form': TaskForm
+            })
+    else: 
+        # con el comando TaskForm(request.POST).save() se guardan los datos
+        # en formato formulario que vienen de la clase TaskForm en forms
+        try:
+            new_task = TaskForm(request.POST).save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            print(new_task)
+            return redirect('tasks')
+        except ValueError: 
+            return render('create_task.html', {
+                'form': TaskForm,
+                'error': 'Datos no Válidos', 
+            })
+
+        
+    
 
 def home(request):
     return render(request, 'home.html')
