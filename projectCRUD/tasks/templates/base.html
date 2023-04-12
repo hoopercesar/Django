@@ -18,9 +18,34 @@
           <a href="/">Home</a>
         </li>
 
+        {% if user.is_authenticated %}
+
+        <li>
+          <a href="/tasks">Tasks</a>
+        </li>
+
+        <li>
+          <a href="/logout">Logout</a>
+        </li>
+
+        <li>
+          <a href="/create_task">Create Task</a>
+        </li>
+
+        <p style="color: rgb(185, 131, 236); font-size: 30px">
+          Bienvenido, {{user}}
+        </p>
+
+        {% else %}
         <li>
           <a href="/signup">Signup</a>
         </li>
+
+        <li>
+          <a href="/signin">Sign In</a>
+        </li>
+
+        {% endif %}
       </ul>
     </nav>
 
