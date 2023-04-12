@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django CRUD</title>
+    <style>
+      body {
+        background: rgb(193, 204, 178);
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="/">Home</a>
+        </li>
+
+        {% if user.is_authenticated %}
+
+        <li>
+          <a href="/tasks">Tasks</a>
+        </li>
+
+        <li>
+          <a href="/logout">Logout</a>
+        </li>
+
+        <li>
+          <a href="/create_task">Create Task</a>
+        </li>
+
+        <p style="color: rgb(185, 131, 236); font-size: 30px">
+          Bienvenido, {{user}}
+        </p>
+
+        {% else %}
+        <li>
+          <a href="/signup">Signup</a>
+        </li>
+
+        <li>
+          <a href="/signin">Sign In</a>
+        </li>
+
+        {% endif %}
+      </ul>
+    </nav>
+
+    {% block content %} {% endblock %}
+  </body>
+</html>
