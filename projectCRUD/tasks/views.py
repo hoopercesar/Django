@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from .forms import TaskForm
 from .models import Task
+from django.shortcuts import get_object_or_404
+
 
 # Create your views here.
 def signup(request):
@@ -45,11 +47,23 @@ def signup(request):
                 })
     
 def tasks(request):
-    tasks = Task.objects.filter(user=request.user)
-    print(tasks)
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False)
+    # print(tasks)
     return render(request, 'tasks.html', {
         'tasks' : tasks,
     })
+
+def task_details(request, task_id):
+    # task = Task.objects.get(user=request.user, pk=task_id)
+    cantidad = Task.objects.filter(user=request.user)
+    # print( 'tarea =', len(cantidad))
+    task = get_object_or_404(Task, user=request.user, pk=task_id)
+    
+    return render(request, 'task_details.html',{
+        'id': task_id,
+        'task' : task, 
+        'cantidad' : len(cantidad),
+    })       
 
 def create_task(request):
     if request.method == 'GET':
@@ -71,11 +85,16 @@ def create_task(request):
                 'error': 'Datos no Válidos', 
             })
 
-        
+
+
     
 
 def home(request):
     return render(request, 'home.html')
+
+# para mostrar el usuario en el nav
+def usuario(request):
+    print(request.user)
 
 # para cerrar la sesión
 def signout(request):
