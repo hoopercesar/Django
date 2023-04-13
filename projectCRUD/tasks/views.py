@@ -47,7 +47,7 @@ def signup(request):
                 })
     
 def tasks(request):
-    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False)
+    tasks = Task.objects.filter(user=request.user)
     # print(tasks)
     return render(request, 'tasks.html', {
         'tasks' : tasks,
@@ -56,8 +56,9 @@ def tasks(request):
 def task_details(request, task_id):
     # task = Task.objects.get(user=request.user, pk=task_id)
     cantidad = Task.objects.filter(user=request.user)
-    # print( 'tarea =', len(cantidad))
+    # print( 'tarea =', len(cantidad)) , pk=task_id
     task = get_object_or_404(Task, user=request.user, pk=task_id)
+    print(task)
     
     return render(request, 'task_details.html',{
         'id': task_id,
@@ -84,9 +85,6 @@ def create_task(request):
                 'form': TaskForm,
                 'error': 'Datos no Válidos', 
             })
-
-
-
     
 
 def home(request):
