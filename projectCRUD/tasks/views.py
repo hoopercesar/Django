@@ -58,11 +58,12 @@ def task_details(request, task_id):
     cantidad = Task.objects.filter(user=request.user)
     # print( 'tarea =', len(cantidad)) , pk=task_id
     task = get_object_or_404(Task, user=request.user, pk=task_id)
-    print(task)
+    form = TaskForm(instance=task)
     
     return render(request, 'task_details.html',{
         'id': task_id,
-        'task' : task, 
+        'task' : task,
+        'form' : form,  
         'cantidad' : len(cantidad),
     })       
 
@@ -121,7 +122,9 @@ def signin(request):
             })
 
             
-
+def editar(request):
+    if request.method == 'POST':
+        return render(request, 'editar.html')
 
 
 
