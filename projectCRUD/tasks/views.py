@@ -53,20 +53,29 @@ def tasks(request):
         'tasks' : tasks,
     })
 
+# función muestra detalles de cada tarea
 def task_details(request, task_id):
     # task = Task.objects.get(user=request.user, pk=task_id)
     cantidad = Task.objects.filter(user=request.user)
     # print( 'tarea =', len(cantidad)) , pk=task_id
     task = get_object_or_404(Task, user=request.user, pk=task_id)
-    form = TaskForm(instance=task)
-    
+        
     return render(request, 'task_details.html',{
         'id': task_id,
-        'task' : task,
-        'form' : form,  
+        'task' : task, 
         'cantidad' : len(cantidad),
     })       
 
+# editar tarea
+def editar(request, task_id):
+    task = get_object_or_404(Task, user=request.user, pk=task_id)
+    if request.method == 'POST':
+        return render(request, 'editar.html', {
+            'form' : TaskForm(instance=task),
+            'id': task_id,
+        })
+
+# función crea nueva tarea tarea
 def create_task(request):
     if request.method == 'GET':
         return render(request, 'create_task.html', {
@@ -122,9 +131,7 @@ def signin(request):
             })
 
             
-def editar(request):
-    if request.method == 'POST':
-        return render(request, 'editar.html')
+
 
 
 
