@@ -9,7 +9,7 @@
 <p>{{task.important}}</p>
 <p>{{task.user_id}}</p>
 {{task}}
-<form action="/editar/" method="POST">
+<form action="{% url 'editar' task.id %}" method="POST">
   {% csrf_token %}
   <button>Editar</button><br />
 </form>
