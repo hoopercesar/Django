@@ -59,21 +59,38 @@ def task_details(request, task_id):
     cantidad = Task.objects.filter(user=request.user)
     # print( 'tarea =', len(cantidad)) , pk=task_id
     task = get_object_or_404(Task, user=request.user, pk=task_id)
-        
+    print('task details', request.method)
     return render(request, 'task_details.html',{
-        'id': task_id,
-        'task' : task, 
-        'cantidad' : len(cantidad),
-    })       
+            'id': task_id,
+            'task' : task, 
+            'cantidad' : len(cantidad),
+        })
+    
+
+
+    
+          
 
 # editar tarea
 def editar(request, task_id):
     task = get_object_or_404(Task, user=request.user, pk=task_id)
     if request.method == 'POST':
-        return render(request, 'editar.html', {
-            'form' : TaskForm(instance=task),
-            'id': task_id,
-        })
+        if 'guardar' in request.POST: print('presionó guardar')
+        if 'cancelar' in request.POST: 
+            return render(request, 'task_details.html', {
+                'task_id': task_id,
+            })
+        else: 
+            return render(request, 'editar.html', {
+                'form' : TaskForm(instance=task),
+                'id': task_id,
+                })
+    
+    
+ 
+    
+          
+        
 
 # función crea nueva tarea tarea
 def create_task(request):
