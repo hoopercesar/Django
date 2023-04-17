@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% block content %}
 <h1>Aquí vamos a editar</h1>
-<form action="">
-  {{form}}
-  <button>Cancelar</button>
-  <button>Guardar</button>
+<form action="/tasks/" method="POST">
+  {% csrf_token %} {{form}}
+  <button type="submit" name="cancel">Cancelar</button>
+  <button type="submit" name="save">Guardar</button>
 </form>
 
 {% endblock %}
