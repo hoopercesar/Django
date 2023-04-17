@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from .forms import TaskForm
 from .models import Task
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 # Create your views here.
 def signup(request):
@@ -64,30 +65,46 @@ def task_details(request, task_id):
             'task' : task, 
             'cantidad' : len(cantidad),
         }) 
-          
-# editar tarea
+
+
+# tarea completada
+def complete_task(request, task_id): 
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.datecompleted = timezone.now()
+        task.save()
+        return redirect('tasks')
+    
+def delete_task(request, task_id): 
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks')
+
+
+# editar tarea:
+# esta función se divide en dos etapas.
+# el botón editar conduce a formulario y el formulario
+# instancia la tarea actual. Una vez hechos los cambios en el formulario
+# se guarda la tarea y los cambios quedan actualizados en la base de datos.
+# se redirige a tasks
+# el botón cancelar cancela la operación de edición y redirige a tasks.
+# 
 def editar(request, task_id):
     task = get_object_or_404(Task, user=request.user, pk=task_id)
-    if 'save' in request.POST: print('GUARDAR') 
 
+    return render(request, 'editar.html', {
+        'form' : TaskForm(instance=task),
+        'id': task_id,
+        })
 
+def cancelar(request, task_id):
+    task = get_object_or_404(Task, user=request.user, pk=task_id)
     if request.method == 'POST':
-        if 'cancel' in request.POST:
-            print('CANCELAR')
+        if 'cancel' in request.POST: 
+            print('canceló')
+            return redirect('home')
 
-        return render(request, 'editar.html', {
-            'form' : TaskForm(instance=task),
-            'id': task_id,
-            })
-
-    
-    # if request.method == 'POST':
-        
-        
-    
-    
- 
-    
           
         
 
