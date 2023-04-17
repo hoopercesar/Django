@@ -8,7 +8,6 @@ from .forms import TaskForm
 from .models import Task
 from django.shortcuts import get_object_or_404
 
-
 # Create your views here.
 def signup(request):
 
@@ -59,32 +58,32 @@ def task_details(request, task_id):
     cantidad = Task.objects.filter(user=request.user)
     # print( 'tarea =', len(cantidad)) , pk=task_id
     task = get_object_or_404(Task, user=request.user, pk=task_id)
-    print('task details', request.method)
+   
     return render(request, 'task_details.html',{
             'id': task_id,
             'task' : task, 
             'cantidad' : len(cantidad),
-        })
-    
-
-
-    
+        }) 
           
-
 # editar tarea
 def editar(request, task_id):
     task = get_object_or_404(Task, user=request.user, pk=task_id)
+    if 'save' in request.POST: print('GUARDAR') 
+
+
     if request.method == 'POST':
-        if 'guardar' in request.POST: print('presionó guardar')
-        if 'cancelar' in request.POST: 
-            return render(request, 'task_details.html', {
-                'task_id': task_id,
+        if 'cancel' in request.POST:
+            print('CANCELAR')
+
+        return render(request, 'editar.html', {
+            'form' : TaskForm(instance=task),
+            'id': task_id,
             })
-        else: 
-            return render(request, 'editar.html', {
-                'form' : TaskForm(instance=task),
-                'id': task_id,
-                })
+
+    
+    # if request.method == 'POST':
+        
+        
     
     
  
