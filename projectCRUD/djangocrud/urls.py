@@ -29,6 +29,8 @@ urlpatterns = [
     path('tasks/<int:task_id>/', views.task_details, name='task_details'),
     path('tasks/<int:task_id>/complete/', views.complete_task, name='complete_task'),
     path('tasks/<int:task_id>/delete/', views.delete_task, name='delete_task'),
-    path('editar/<int:task_id>/', views.editar, name='editar'),
+    # path('editar/<int:task_id>/', views.editar, name='editar'),
     path('editar/<int:task_id>/cancelar/', views.cancelar, name='cancelar'),
+    path('tasks/<int:task_id>/guardar_cambios', views.guardar_cambios, name='guardar_cambios'),
+    path('tasks/<int:task_id>/editar', views.editar, name='editar'),
 ]
