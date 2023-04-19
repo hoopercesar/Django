@@ -91,19 +91,29 @@ def delete_task(request, task_id):
 # el botón cancelar cancela la operación de edición y redirige a tasks.
 # 
 def editar(request, task_id):
-    task = get_object_or_404(Task, user=request.user, pk=task_id)
+    if request.method == 'POST':
+        task = get_object_or_404(Task, pk=task_id, user=request.user)
+        return render(request, 'editar.html', {
+            'form' : TaskForm(instance=task),
+            'id': task_id,
+            })
+    
 
-    return render(request, 'editar.html', {
-        'form' : TaskForm(instance=task),
-        'id': task_id,
-        })
+def guardar_cambios(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    form = TaskForm(request.POST, instance=task)
+    form.save()
+    print(task)
+    return redirect('tasks')
+        
+
 
 def cancelar(request, task_id):
-    task = get_object_or_404(Task, user=request.user, pk=task_id)
+    # task = get_object_or_404(Task, user=request.user, pk=task_id)
     if request.method == 'POST':
-        if 'cancel' in request.POST: 
-            print('canceló')
-            return redirect('home')
+        # task.save()
+        print('canceló')
+        return redirect('home')
 
           
         
