@@ -1,12 +1,11 @@
 {% extends 'base.html' %} {% block content %}
 <h1>Aquí vamos a editar</h1>
-<form action="/tasks/" method="POST">
+<form action="{% url 'guardar_cambios' task.id %}" method="POST">
   {% csrf_token %} {{form}}
-
   <button type="submit" name="save">Guardar</button>
 </form>
 
-<form action="{% url 'cancelar' %}" method="POST">
+<form action="/tasks/" method="POST">
   {% csrf_token %}
   <button type="submit" name="cancel">Cancelar</button>
 </form>
