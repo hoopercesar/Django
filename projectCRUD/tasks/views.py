@@ -8,6 +8,8 @@ from .forms import TaskForm
 from .models import Task
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def signup(request):
@@ -45,7 +47,8 @@ def signup(request):
                     'form' : UserCreationForm,
                     'mensaje' : 'Contraseñas no son iguales',
                 })
-    
+
+@login_required   
 def tasks(request):
     tasks = Task.objects.filter(user=request.user)
     # print(tasks)
@@ -54,6 +57,7 @@ def tasks(request):
     })
 
 # función muestra detalles de cada tarea
+@login_required 
 def task_details(request, task_id):
     # task = Task.objects.get(user=request.user, pk=task_id)
     cantidad = Task.objects.filter(user=request.user)
@@ -68,13 +72,15 @@ def task_details(request, task_id):
 
 
 # tarea completada
+@login_required
 def complete_task(request, task_id): 
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
         task.datecompleted = timezone.now()
         task.save()
         return redirect('tasks')
-    
+
+@login_required   
 def delete_task(request, task_id): 
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
@@ -90,24 +96,25 @@ def delete_task(request, task_id):
 # se redirige a tasks
 # el botón cancelar cancela la operación de edición y redirige a tasks.
 # 
+@login_required
 def editar(request, task_id):
     if request.method == 'POST':
         task = get_object_or_404(Task, pk=task_id, user=request.user)
         return render(request, 'editar.html', {
             'form' : TaskForm(instance=task),
-            'id': task_id,
+            'id': task.id,
             })
     
-
+@login_required
 def guardar_cambios(request, task_id):
-    task = get_object_or_404(Task, pk=task_id, user=request.user)
-    form = TaskForm(request.POST, instance=task)
-    form.save()
-    print(task)
-    return redirect('tasks')
-        
+    if request.method == 'POST':
+        task = get_object_or_404(Task, pk=task_id, user=request.user)
+        form = TaskForm(request.POST, instance=task)
+        form.save()
+        print(task)
+        return redirect('tasks')
 
-
+@login_required       
 def cancelar(request, task_id):
     # task = get_object_or_404(Task, user=request.user, pk=task_id)
     if request.method == 'POST':
@@ -115,10 +122,8 @@ def cancelar(request, task_id):
         print('canceló')
         return redirect('home')
 
-          
-        
-
 # función crea nueva tarea tarea
+@login_required 
 def create_task(request):
     if request.method == 'GET':
         return render(request, 'create_task.html', {
@@ -144,10 +149,12 @@ def home(request):
     return render(request, 'home.html')
 
 # para mostrar el usuario en el nav
+@login_required
 def usuario(request):
     print(request.user)
 
 # para cerrar la sesión
+@login_required 
 def signout(request):
     logout(request)
     return redirect('home')
