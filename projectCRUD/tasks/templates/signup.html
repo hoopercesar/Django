@@ -4,10 +4,17 @@
 <div class="alert alert-primary" role="alert" style="background: aqua">
   <p>{{mensaje}}</p>
 </div>
-
-<form action="/signup/" method="POST">
-  {% csrf_token %} {{form.as_p}}
-  <button>Send</button>
-</form>
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <main class="container">
+      <form action="/signup/" method="POST" class="card card-body">
+        {% csrf_token %} {{form.as_p}}
+        <div class="text-left">
+          <button class="btn btn-primary">Send</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
 
 {% endblock %}
