@@ -1,0 +1,6 @@
+{% extends 'header.html' %} {% block content %}
+<h1>Acá va gráfico de las probabilidades o la entropía</h1>
+<br />
+{% autoescape off %} {{ plot_div }} {% endautoescape %}
+<br />
+{% endblock %}
