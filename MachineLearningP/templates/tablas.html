@@ -1,0 +1,27 @@
+{% extends 'header.html' %} {% block content %}
+<h2>{{titulo}}</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      {% for col in columnas %}
+      <th > {{col}} </th>
+      {% endfor %}
+     
+    </tr>
+  </thead>
+  <tbody>
+    
+    <br />
+    {% for fila in tabla %}
+
+      <th scope="row">4</th>
+      {% for col in fila %}
+        <td>{{col}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
