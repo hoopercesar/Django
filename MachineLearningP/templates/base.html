@@ -1,4 +1,15 @@
+{% extends 'header.html' %} {% block content %}
 <h1>Gráficos CCI</h1>
 <p>Modelo test</p>
 
+<form method="POST" action="{% url 'base' %}">
+  {% csrf_token %} <br />
+  {% for fecha in fechas %}
+  <input type="hidden" name="accion" value="hola" />
+  <button type="submit">{{fecha}}</button>
+  {% endfor %}
+</form>
+
 <div>{% autoescape off %} {{ plot_div }} {% endautoescape %}</div>
+
+{% endblock %}
