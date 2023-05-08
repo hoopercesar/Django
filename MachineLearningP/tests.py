@@ -42,6 +42,8 @@ my_string = filas[10]
 # selecciona todos los datos correspondientes a la fecha definida anteriormente
 cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 resultado = cur.fetchall()
-print(resultado)
+
+for fila in filas:
+    print(fila[0])
 
 con.close()
