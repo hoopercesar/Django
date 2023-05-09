@@ -4,8 +4,10 @@ import pandas as pd
 import numpy as np
 import sqlite3
 import os
+from collections import Counter
 
 import dash
+from .graficos import graficoSegunFecha
 # import dash_core_components as dcc
 from dash import dcc, html
 import plotly
@@ -18,19 +20,21 @@ from plotly.offline import plot
 from plotly.graph_objs import Scatter
 from django_plotly_dash import DjangoDash
 
+# las funciones para graficar
 
 # ruta = 'C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/bdml2023.xlsx'
 
 path = 'C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/DOCUMENTO/'
-con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/data.db')
+con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/data.db', check_same_thread=False)
 cur = con.cursor()
-
+#
 cur.execute("SELECT * FROM data")
 rows = cur.fetchall()
 
 # selecciona fecha
 cur.execute("SELECT DISTINCT fecha FROM data")
 fechas = cur.fetchall()
+
 
 # selecciona hora
 cur.execute("SELECT hora FROM data")
@@ -85,9 +89,10 @@ scaler = StandardScaler()
 # # columnas
 # columnas = ['col' + str(k) for k in range(0, 14)]
 
+# fechas = [fecha[0] for fecha in fechas]
 
 def home(request):
-    print(fechas)
+    # print(fechas)
     return render(request, 'home.html', {
         'plot_div': 'mensaje', 
         'hola': 'mensaje', 
@@ -96,16 +101,13 @@ def home(request):
     })
    
 
-def base(request):   
-    # # cuenta y selecciona los días -diferentes entre sí- en la DB
-    # cur.execute('SELECT DISTINCT fecha FROM data')
-    # # crea una lista con las fechas de la DB 
-    # fechas = cur.fetchall()
+def base(request):       
     if request.method == 'POST':
-        accion = request.POST.get('accion')
-        # print(accion)
-
-    print('Aquí va', request.POST.get('fecha'))
+        fecha_string = eval(request.POST.get('accion'))[0]
+        datos_selected = [row for row in rows if row[0]==fecha_string]
+        
+           
+           
 
     return render(request, 'base.html', {
         'plot_div': 'mensaje',
