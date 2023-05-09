@@ -42,8 +42,19 @@ my_string = filas[10]
 # selecciona todos los datos correspondientes a la fecha definida anteriormente
 cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 resultado = cur.fetchall()
-
-for fila in filas:
-    print(fila[0])
+# print(resultado)
+# for fila in filas:
+#     print(fila[0])
 
 con.close()
+
+
+
+
+
+tupla = ('2022-01-31 00:00:00', '16:09', 5, 9, 10, 14, 18, 22, 24, 27, 30, 32, '4497.75', 108, 109, '-271')
+algo = '2022-01-03 00:00:00'
+
+seleccionados = [row for row in rows if row[0]==algo]
+print(seleccionados)
+
