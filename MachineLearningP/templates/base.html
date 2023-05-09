@@ -5,8 +5,8 @@
 <form method="POST" action="{% url 'base' %}">
   {% csrf_token %} <br />
   {% for fecha in fechas %}
-  <input type="hidden" name="accion" value="hola" />
-  <button type="submit">{{fecha}}</button>
+  <!-- <input type="hidden" name="accion" value="{{ fecha }}" /> -->
+  <button type="submit" name="accion" value="{{ fecha }}">{{fecha}}</button>
   {% endfor %}
 </form>
 
