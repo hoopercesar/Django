@@ -2,6 +2,9 @@
 <h1>Gráficos CCI</h1>
 <p>Modelo test</p>
 
+<h3>{{titulo}}</h3>
+<div>{% autoescape off %} {{ plot_div }} {% endautoescape %}</div>
+
 <form method="POST" action="{% url 'base' %}">
   {% csrf_token %} <br />
   {% for fecha in fechas %}
@@ -9,7 +12,5 @@
   <button type="submit" name="accion" value="{{ fecha }}">{{fecha}}</button>
   {% endfor %}
 </form>
-
-<div>{% autoescape off %} {{ plot_div }} {% endautoescape %}</div>
 
 {% endblock %}
