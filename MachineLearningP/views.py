@@ -41,10 +41,10 @@ cur.execute("SELECT hora FROM data")
 hora = cur.fetchall()
 
 # los datos x e y
-y0 = [row[10] for row in rows]
-y1 = [row[11] for row in rows]
-y2 = [row[12] for row in rows]
-t = np.arange(len(y1))
+# y0 = [row[10] for row in rows]
+# y1 = [row[11] for row in rows]
+# y2 = [row[12] for row in rows]
+# t = np.arange(len(y1))
 
 r0 = list(rows[0])
 
@@ -92,29 +92,86 @@ scaler = StandardScaler()
 # fechas = [fecha[0] for fecha in fechas]
 
 def home(request):
-    # print(fechas)
-    return render(request, 'home.html', {
-        'plot_div': 'mensaje', 
-        'hola': 'mensaje', 
-        'color': 'red',
 
-    })
+    if request.method == 'POST':
+        fecha_string = eval(request.POST.get('accion'))[0]
+        datos_selected = [row for row in rows if row[0]==fecha_string]
+
+        t = [col[1] for col in datos_selected] 
+        y1 = [float(col[12]) for col in datos_selected]
+ 
+        trace1 = go.Scatter(
+            x = t,
+            y=y1,
+            mode='lines',
+            name='Precio'
+        )
+
+        layout = go.Layout(title='Precio', height=500)
+        fig = go.Figure(data=trace1, layout=layout)
+
+        plot_div = plotly.offline.plot(fig, auto_open=False, output_type='div')
+        
+        context = {
+            'plot_div': plot_div,
+            'fechas' : fechas,
+            'titulo' : fecha_string,
+            }      
+        return render(request, 'home.html', context)
    
+    else: 
+        return render(request, 'home.html', {
+            'plot_div': 'Selecciona una Fecha', 
+            'fechas': fechas,
+            })
 
-def base(request):       
+
+def base(request): 
+        
     if request.method == 'POST':
         fecha_string = eval(request.POST.get('accion'))[0]
         datos_selected = [row for row in rows if row[0]==fecha_string]
         
-           
-           
+        y1 = [col[13] for col in datos_selected] 
+        t = [col[1] for col in datos_selected]      
 
-    return render(request, 'base.html', {
-        'plot_div': 'mensaje',
-        'fechas' : fechas,
+        trace1 = go.Scatter(
+            x = t,
+            y=y1,
+            mode='lines',
+            name='CCI 5'
+        )
+    
+        y2 = [col[14] for col in datos_selected]
+        trace2 = go.Scatter(
+            x=t,
+            y=y2,
+            mode='lines',
+            name='CCI 30'
+        )
+        
+        data = [trace1, trace2]
+        layout = go.Layout(title='CCI', height=500)
+        fig = go.Figure(data=data, layout=layout)
+    
+        plot_div = plotly.offline.plot(fig, auto_open=False, output_type='div')
+        
+        context = {
+            'plot_div': plot_div,
+            'fechas' : fechas,
+            'titulo' : fecha_string,
+            }       
+            
+
+        return render(request, 'base.html', context)
+    else:
+        return render(request, 'base.html', {
+            'fechas': fechas,
+            'plot_div': 'Selecciona una Fecha',
+
         })
 
- 
+
 def probs(request):
     return render(request, 'probs.html', {
         'plot_div': 'un mensaje', 
