@@ -1,5 +1,6 @@
 {% extends 'header.html' %} {% block content %}
 <h1>Precio Close</h1>
+<h3>{{titulo}}</h3>
 <br />
 {% autoescape off %} {{ plot_div }} {% endautoescape %}
 <br />
@@ -7,6 +8,7 @@
 <form method="POST" action="{% url 'home' %}">
   {% csrf_token %} <br />
   {% for fecha in fechas %}
+
   <!-- <input type="hidden" name="accion" value="{{ fecha }}" /> -->
   <button type="submit" name="accion" value="{{ fecha }}">{{fecha}}</button>
   {% endfor %}
