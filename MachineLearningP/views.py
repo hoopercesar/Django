@@ -119,6 +119,7 @@ def home(request):
             }      
         return render(request, 'home.html', context)
    
+   
     else: 
         return render(request, 'home.html', {
             'plot_div': 'Selecciona una Fecha', 
