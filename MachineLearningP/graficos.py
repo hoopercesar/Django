@@ -27,3 +27,8 @@ def graficoSegunFecha(fecha):
     # cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
     # data = cur.fetchall()
     print('HOLA, los datos', my_string)
+
+
+def simbolos(datos):
+    print('oi')
+    
