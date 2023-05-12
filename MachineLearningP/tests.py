@@ -1,5 +1,6 @@
 # from django.test import TestCase
 import sqlite3
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,51 +11,42 @@ from collections import Counter
 # Create your tests here.
 # con = sqlite3.connect("data/portal_mammals.sqlite")
 # df = pd.read_sql_query("SELECT * from surveys", con)
+path = 'C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/'
+dbs = [db for db in os.listdir(path) if db[-2::] == 'db' and db[5].isdigit()==True]
 
-con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/data.db')
+con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/dbsheets.db', check_same_thread=False)
 cur = con.cursor()
-# table = """"""
-# cur.execute(table)
 
-cur.execute("SELECT * FROM data")
-
+cur.execute("SELECT CLOSE FROM datos5m")
 rows = cur.fetchall()
 
 def formated(vector):
     return datetime.date(int(vector[0]), int(vector[1]), int(vector[2]))
 
-hora = [hora[1] for hora in rows]
-fecha = [fecha[0][0:10].split('-') for fecha in rows]
-fechaformated = list(map(formated, fecha))
-f = fecha[0]
-z = Counter(fechaformated)
-c = 0
+# hora = [hora[1] for hora in rows]
+# fecha = [fecha[0][0:10].split('-') for fecha in rows]
+# fechaformated = list(map(formated, fecha))
+# f = fecha[0]
+# z = Counter(fechaformated)
+# c = 0
 # for k in z:
 #     c += z[k]
 #     print(k, z[k], c)
 
 # cuenta y selecciona los días -diferentes entre sí- en la DB
-cur.execute('SELECT DISTINCT fecha FROM data')
-# crea una lista con las fechas de la DB
-filas = cur.fetchall()
-# define una fecha específica de la lista de fechas
-my_string = filas[10]
-# selecciona todos los datos correspondientes a la fecha definida anteriormente
-cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
-resultado = cur.fetchall()
-# print(resultado)
-# for fila in filas:
-#     print(fila[0])
+# cur.execute('SELECT DISTINCT fecha FROM data')
+# # crea una lista con las fechas de la DB
+# filas = cur.fetchall()
+# # define una fecha específica de la lista de fechas
+# my_string = filas[10]
+# # selecciona todos los datos correspondientes a la fecha definida anteriormente
+# cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
+# resultado = cur.fetchall()
+# print(dbs)
+print(type(rows[0][0]))
 
 con.close()
 
 
 
-
-
-tupla = ('2022-01-31 00:00:00', '16:09', 5, 9, 10, 14, 18, 22, 24, 27, 30, 32, '4497.75', 108, 109, '-271')
-algo = '2022-01-03 00:00:00'
-
-seleccionados = [row for row in rows if row[0]==algo]
-print(seleccionados)
 
