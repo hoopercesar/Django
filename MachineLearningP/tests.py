@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import datetime
 from collections import Counter
 
-
 # Create your tests here.
 # con = sqlite3.connect("data/portal_mammals.sqlite")
 # df = pd.read_sql_query("SELECT * from surveys", con)
@@ -17,7 +16,7 @@ dbs = [db for db in os.listdir(path) if db[-2::] == 'db' and db[5].isdigit()==Tr
 con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/dbsheets.db', check_same_thread=False)
 cur = con.cursor()
 
-cur.execute("SELECT CLOSE FROM datos5m")
+cur.execute("SELECT * FROM datos5m")
 rows = cur.fetchall()
 
 cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
@@ -46,8 +45,8 @@ def formated(vector):
 # cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 # resultado = cur.fetchall()
 # print(dbs)
-for row in rows:
-    print(row)
+for k in range(len(rows)):
+    print(rows[k][1::])
 
 con.close()
 
