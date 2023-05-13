@@ -45,8 +45,26 @@ def formated(vector):
 # cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 # resultado = cur.fetchall()
 # print(dbs)
-for k in range(len(rows)):
-    print(rows[k][1::])
+res = []
+
+for k in range(1, len(rows)):
+    salida = {}
+    res = tuple(map(lambda i, j: i - j, rows[k][1::], rows[k-1][1::]))
+    if res[1] > 0 and res[2] >= 0: 
+        salida['L'] = res
+        print(res + ('L',))
+    if res[1] <= 0 and res[2] < 0: 
+        salida['S'] = res
+        print(res + ('S',))
+    if res[1] > 0 and res[2] < 0 : 
+        salida['O'] = res
+        print(res + ('O',))
+    if res[1] <= 0 and res[2] >= 0 : 
+        salida['I'] = res
+        print(res + ('I',))
+    
+    # print(res)
+    # print(k, rows[k][1::]-rows[k-1][1::])
 
 con.close()
 
