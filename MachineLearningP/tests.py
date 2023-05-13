@@ -20,6 +20,9 @@ cur = con.cursor()
 cur.execute("SELECT CLOSE FROM datos5m")
 rows = cur.fetchall()
 
+cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tablas = cur.fetchall()
+
 def formated(vector):
     return datetime.date(int(vector[0]), int(vector[1]), int(vector[2]))
 
@@ -43,7 +46,8 @@ def formated(vector):
 # cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 # resultado = cur.fetchall()
 # print(dbs)
-print(type(rows[0][0]))
+for row in rows:
+    print(row)
 
 con.close()
 
