@@ -45,24 +45,33 @@ def formated(vector):
 # cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 # resultado = cur.fetchall()
 # print(dbs)
-res = []
+respuesta = []
 
 for k in range(1, len(rows)):
-    salida = {}
+    salida = []
     res = tuple(map(lambda i, j: i - j, rows[k][1::], rows[k-1][1::]))
+
     if res[1] > 0 and res[2] >= 0: 
-        salida['L'] = res
-        print(res + ('L',))
+        salida = [rows[k][0], 'L']
     if res[1] <= 0 and res[2] < 0: 
-        salida['S'] = res
-        print(res + ('S',))
+        salida = [rows[k][0], 'S'] 
     if res[1] > 0 and res[2] < 0 : 
-        salida['O'] = res
-        print(res + ('O',))
-    if res[1] <= 0 and res[2] >= 0 : 
-        salida['I'] = res
-        print(res + ('I',))
-    
+        salida = [rows[k][0], 'O']
+    if res[1] <= 0 and res[2] >= 0:
+        salida = [rows[k][0], 'I'] 
+
+    ## ÉSTO ESTÁ MALO. DEBE SER rows[0] y rows[3] res es la diferencia
+    if res[3] > res[0]: 
+        salida.append('verde')
+    if res[3] < res[0]:
+        salida.append('rojo')
+    if res[3] == res[0]: 
+        salida.append('amarillo') 
+
+    respuesta.append(salida)
+
+print(respuesta)
+
     # print(res)
     # print(k, rows[k][1::]-rows[k-1][1::])
 
