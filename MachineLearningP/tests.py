@@ -61,12 +61,12 @@ for k in range(1, len(rows)):
         salida = [rows[k][0], 'I'] 
 
     ## ÉSTO ESTÁ MALO. DEBE SER rows[0] y rows[3] res es la diferencia
-    if res[3] > res[0]: 
-        salida.append('verde')
-    if res[3] < res[0]:
-        salida.append('rojo')
-    if res[3] == res[0]: 
-        salida.append('amarillo') 
+    if rows[k][4] > rows[k][1]: 
+        salida.append('green')
+    if rows[k][4] < rows[k][1]:
+        salida.append('red')
+    if rows[k][4] == rows[k][1]: 
+        salida.append('yelow') 
 
     respuesta.append(salida)
 
