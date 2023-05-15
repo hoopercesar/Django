@@ -14,9 +14,10 @@ def codificador(tabla):
     respuesta = []
     for k in range(1, len(tabla)):
         salida = []
-        # 
+        # este comando resta dos tuplas consecutivas tabla[k] - tabla[k-1]
+        # La función mapea cada tupla y va restando componente a componente
         res = tuple(map(lambda i, j: i - j, tabla[k][1::], tabla[k-1][1::]))
-        
+
         # genera LSOI
         if res[1] > 0 and res[2] >= 0: 
             salida = [tabla[k][0], 'L']
@@ -37,3 +38,5 @@ def codificador(tabla):
         
         respuesta.append(salida)
     return respuesta
+
+
