@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 from collections import Counter
+from funciones import codificador
 
 # Create your tests here.
 # con = sqlite3.connect("data/portal_mammals.sqlite")
@@ -19,6 +20,7 @@ cur = con.cursor()
 cur.execute("SELECT * FROM datos5m")
 rows = cur.fetchall()
 
+# selecciona las tablas dentro de una DB
 cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tablas = cur.fetchall()
 
@@ -45,30 +47,8 @@ def formated(vector):
 # cur.execute("SELECT * FROM data WHERE fecha = ?", (my_string))
 # resultado = cur.fetchall()
 # print(dbs)
-respuesta = []
 
-for k in range(1, len(rows)):
-    salida = []
-    res = tuple(map(lambda i, j: i - j, rows[k][1::], rows[k-1][1::]))
-
-    if res[1] > 0 and res[2] >= 0: 
-        salida = [rows[k][0], 'L']
-    if res[1] <= 0 and res[2] < 0: 
-        salida = [rows[k][0], 'S'] 
-    if res[1] > 0 and res[2] < 0 : 
-        salida = [rows[k][0], 'O']
-    if res[1] <= 0 and res[2] >= 0:
-        salida = [rows[k][0], 'I'] 
-
-    ## ÉSTO ESTÁ MALO. DEBE SER rows[0] y rows[3] res es la diferencia
-    if rows[k][4] > rows[k][1]: 
-        salida.append('green')
-    if rows[k][4] < rows[k][1]:
-        salida.append('red')
-    if rows[k][4] == rows[k][1]: 
-        salida.append('yelow') 
-
-    respuesta.append(salida)
+respuesta = codificador(rows)
 
 print(respuesta)
 
