@@ -22,6 +22,9 @@ from software import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('base/', views.base),
+    path('base/', views.base, name='base'),
+    path('probs/', views.probs, name='probs'),
+    path('tablas/', views.tablas, name='tablas'),
+    path('resumen/', views.resumen, name='resumen'),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]
