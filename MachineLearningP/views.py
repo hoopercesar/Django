@@ -5,6 +5,7 @@ import numpy as np
 import sqlite3
 import os
 from collections import Counter
+from funciones import codificador
 
 import dash
 from .graficos import graficoSegunFecha
@@ -183,6 +184,12 @@ def tablas(request):
         'tabla' : rows,     
         'titulo': 'Aquí van las tablas', 
         # 'columnas': columnas,
+    })
+
+
+def resumen(request):
+    return render(request, {
+        'respuesta': rows,
     })
 
 con.close()
