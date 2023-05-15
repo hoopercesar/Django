@@ -22,7 +22,6 @@ from django_plotly_dash import DjangoDash
 
 # las funciones para graficar
 
-# ruta = 'C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/bdml2023.xlsx'
 
 path = 'C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/DOCUMENTO/'
 con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/data.db', check_same_thread=False)
