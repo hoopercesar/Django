@@ -11,7 +11,7 @@ def codificador(tabla):
 
     retorno: lista de arreglos [[hora, 'codigo letra', 'color'], ...]
     '''
-    respuesta = []
+    respuesta = {}
     for k in range(1, len(tabla)):
         salida = []
         # este comando resta dos tuplas consecutivas tabla[k] - tabla[k-1]
@@ -36,7 +36,7 @@ def codificador(tabla):
         if tabla[k][4] == tabla[k][1]: 
             salida.append('yelow') 
         
-        respuesta.append(salida)
+        # respuesta.append(salida)
+        respuesta['tiempo'].append(salida[0])
     return respuesta
-
 
