@@ -5,7 +5,7 @@ import numpy as np
 import sqlite3
 import os
 from collections import Counter
-from funciones import codificador
+from .models import codificado, financial
 
 import dash
 from .graficos import graficoSegunFecha
@@ -34,7 +34,6 @@ rows = cur.fetchall()
 # selecciona fecha
 cur.execute("SELECT DISTINCT fecha FROM data")
 fechas = cur.fetchall()
-
 
 # selecciona hora
 cur.execute("SELECT hora FROM data")
@@ -186,10 +185,21 @@ def tablas(request):
         # 'columnas': columnas,
     })
 
-
+# df = financial()
 def resumen(request):
-    return render(request, {
-        'respuesta': rows,
+    resultados = codificado()
+    hora = [hora[0] for hora in resultados]
+    simbolo = [simbol[1] for simbol in resultados]
+    color = [color[2] for color in resultados]
+    return render(request, 'resumen.html', {
+        'minutos': resultados,
+        'test' : {
+            'hola': ['chao', 'pronto', 'quiás'], 
+            'dia': ['noche', 'tarde', 'mañana'], 
+            'frio': [1, 2, 5]
+            }, 
     })
+
+
 
 con.close()
