@@ -1,5 +1,22 @@
 {% extends 'header.html' %} {% block content %}
 <h1>Precio Close</h1>
-<p>{{respuesta}}</p>
-
+{% for ks in test.frio %}  
+  <p>{{ks}}</p>
+{% endfor %}
+<table class="table table-striped">
+  
+  <tbody>
+    
+    <br />
+    
+    {% for fila in minutos %}
+          
+      <th scope="row"> {{ fila }} </th>
+      {% for col in fila %}
+        <td>{{col}}</td>
+      {% endfor %}      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
