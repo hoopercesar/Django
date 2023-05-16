@@ -8,6 +8,7 @@ import datetime
 from collections import Counter
 from funciones import codificador
 
+
 # Create your tests here.
 # con = sqlite3.connect("data/portal_mammals.sqlite")
 # df = pd.read_sql_query("SELECT * from surveys", con)
@@ -48,9 +49,10 @@ def formated(vector):
 # resultado = cur.fetchall()
 # print(dbs)
 
-respuesta = codificador(rows)
 
-print(respuesta)
+print(codificador(rows))
+
+# print(nsei)
 
     # print(res)
     # print(k, rows[k][1::]-rows[k-1][1::])
