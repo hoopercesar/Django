@@ -4,7 +4,7 @@ import sqlite3
 import datetime
 import pandas as pd
 import numpy as np
-import pandas_datareader as pdr
+import pandas_datareader as data
 
 con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/dbsheets.db', check_same_thread=False)
 cur = con.cursor()
@@ -25,8 +25,10 @@ def codificador(tabla):
     retorno: lista de arreglos [[hora, 'codigo letra', 'color'], ...]
     '''
     respuesta = []
+
     for k in range(1, len(tabla)):
         salida = []
+        parcial = {}
         # este comando resta dos tuplas consecutivas tabla[k] - tabla[k-1]
         # La función mapea cada tupla y va restando componente a componente
         res = tuple(map(lambda i, j: i - j, tabla[k][1::], tabla[k-1][1::]))
@@ -49,15 +51,19 @@ def codificador(tabla):
         if tabla[k][4] == tabla[k][1]: 
             salida.append('yelow') 
         
-        respuesta.append(salida)
+        parcial['tiempo'] = salida[0]
+        parcial['simbolo'] = salida[1]
+        parcial['color'] = salida[2]
+
+        respuesta.append(parcial)
     return respuesta
 
 def codificado():
     return codificador(tabla)
 
 def financial():
-    start_date = datetime.datetime(2021, 1, 1)
+    start_date = datetime.datetime(2022, 6,6)
     end_date = datetime.datetime(2022, 1, 1)
     # nsei = pdr.get_data_yahoo("^NSEI", start="2015-01-01", end="2016-01-01") 
-    nsei = pdr.DataReader('AAPL', 'yahoo', start_date, end_date)
+    nsei = data.DataReader('TSLA', 'yahoo', '1/05/2022')
     return nsei
