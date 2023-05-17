@@ -185,16 +185,16 @@ def tablas(request):
         # 'columnas': columnas,
     })
 
-# df = financial()
+
 def resumen(request):
     resultados = codificado()
-    hora = [hora[0] for hora in resultados]
-    simbolo = [simbol[1] for simbol in resultados]
-    color = [color[2] for color in resultados]
+    # df = financial()
+    # print(df)
+
     return render(request, 'resumen.html', {
         'minutos': resultados,
         'test' : {
-            'hola': ['chao', 'pronto', 'quiás'], 
+            'hola': ['chao', 'pronto', 'quizás'], 
             'dia': ['noche', 'tarde', 'mañana'], 
             'frio': [1, 2, 5]
             }, 
