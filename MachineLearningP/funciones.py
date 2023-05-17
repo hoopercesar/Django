@@ -11,9 +11,13 @@ def codificador(tabla):
 
     retorno: lista de arreglos [[hora, 'codigo letra', 'color'], ...]
     '''
-    respuesta = {}
+    respuesta = []
+    tiempo = []
+    simbolo = []
+    color = []
     for k in range(1, len(tabla)):
         salida = []
+        parcial = {}
         # este comando resta dos tuplas consecutivas tabla[k] - tabla[k-1]
         # La función mapea cada tupla y va restando componente a componente
         res = tuple(map(lambda i, j: i - j, tabla[k][1::], tabla[k-1][1::]))
@@ -36,7 +40,11 @@ def codificador(tabla):
         if tabla[k][4] == tabla[k][1]: 
             salida.append('yelow') 
         
-        # respuesta.append(salida)
-        respuesta['tiempo'].append(salida[0])
+        parcial['tiempo'] = salida[0]
+        parcial['simbolo'] = salida[1]
+        parcial['color'] = salida[2]
+        
+        respuesta.append(parcial)
+  
     return respuesta
 
