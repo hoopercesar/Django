@@ -188,9 +188,7 @@ def tablas(request):
 
 def resumen(request):
     resultados = codificado()
-    # df = financial()
-    # print(df)
-
+    
     return render(request, 'resumen.html', {
         'minutos': resultados,
         'test' : {
@@ -200,6 +198,40 @@ def resumen(request):
             }, 
     })
 
+
+def bolsa(request):
+    df = financial('2022-01-01', "2023-05-01")
+    
+    print(request.method)
+
+    y1 = list(df.Close)
+    t = df.index  #np.arange(0, 115)   
+
+    trace1 = go.Scatter(
+        x = t,
+        y=y1,
+        mode='lines',
+        name='CLOSE'
+    )
+
+    y2 = list(df.High)
+    trace2 = go.Scatter(
+        x = t,
+        y = y2,
+        mode = 'lines',
+        name = 'HIGH'
+    )
+
+    data = [trace1, trace2]
+    layout = go.Layout(title='Señales Open y Close vs Tiempo', height=500)
+    fig = go.Figure(data=data, layout=layout)
+
+    plot_div = plotly.offline.plot(fig, auto_open=False, output_type='div')
+    
+    context = {
+        'plot_div': plot_div,
+        }       
+    return render(request, 'bolsa.html', context)
 
 
 con.close()
