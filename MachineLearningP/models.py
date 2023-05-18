@@ -4,7 +4,8 @@ import sqlite3
 import datetime
 import pandas as pd
 import numpy as np
-import pandas_datareader as data
+import yfinance as yf
+
 
 con = sqlite3.connect('C:/Users/Cesar Hooper/Desktop/github/proyecto_MARCELO/dbsheets.db', check_same_thread=False)
 cur = con.cursor()
@@ -61,9 +62,12 @@ def codificador(tabla):
 def codificado():
     return codificador(tabla)
 
-def financial():
-    start_date = datetime.datetime(2022, 6,6)
-    end_date = datetime.datetime(2022, 1, 1)
-    # nsei = pdr.get_data_yahoo("^NSEI", start="2015-01-01", end="2016-01-01") 
-    nsei = data.DataReader('TSLA', 'yahoo', '1/05/2022')
-    return nsei
+def financial(start, end):
+    tsla = yf.Ticker('TSLA')
+    data = yf.download("TSLA", interval = "1d", start=start, end=end)
+    # "2022-01-01"
+    # "2023-01-01"
+    return data
+
+
+print(pd.__version__)
