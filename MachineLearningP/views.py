@@ -200,39 +200,62 @@ def resumen(request):
 
 
 def bolsa(request):
-    df = financial('2022-01-01', "2023-05-01")
-
     
-    print(request.POST.get('validationDefault02'))
+    if request.method == 'POST':
+        desde = request.POST.get('desde')
+        hasta = request.POST.get('hasta')
+        df = financial(desde, hasta)
 
-    y1 = list(df.Close)
-    t = df.index  #np.arange(0, 115)   
+        y1 = list(df.Close)
+        t = df.index  #np.arange(0, 115)   
 
-    trace1 = go.Scatter(
-        x = t,
-        y=y1,
-        mode='lines',
-        name='CLOSE'
-    )
+        trace1 = go.Scatter(
+            x = t,
+            y=y1,
+            mode='lines',
+            name='CLOSE'
+        )
 
-    y2 = list(df.High)
-    trace2 = go.Scatter(
-        x = t,
-        y = y2,
-        mode = 'lines',
-        name = 'HIGH'
-    )
+        y2 = list(df.High)
+        trace2 = go.Scatter(
+            x = t,
+            y = y2,
+            mode = 'lines',
+            name = 'HIGH'
+        )
 
-    data = [trace1, trace2]
-    layout = go.Layout(title='Señales Open y Close vs Tiempo', height=500)
-    fig = go.Figure(data=data, layout=layout)
+        data = [trace1, trace2]
+        layout = go.Layout(title='Señales Open y Close vs Tiempo', height=500)
+        fig = go.Figure(data=data, layout=layout)
 
-    plot_div = plotly.offline.plot(fig, auto_open=False, output_type='div')
-    
-    context = {
-        'plot_div': plot_div,
-        }       
-    return render(request, 'bolsa.html', context)
+        plot_div = plotly.offline.plot(fig, auto_open=False, output_type='div')
+        
+        context = {
+            'plot_div': plot_div,
+            'intervalos': [
+                '1m', '2m', '5m', '15m', '30m', '60m', 
+                '90m', '1h', '1d', '5d', '1wk', '1mo', 
+                '3mo'],
+
+            'intrumentos':['AAPL', 'GIGA', 'AMZN', 'TSLA', 'MSFT', 'NKE'],
+        }
+     
+        return render(request, 'bolsa.html', context)
+    else:
+        context = {
+            'plot_div': 'Seleccione para obtener información',
+            'intervalos': [
+                '1m', '2m', '5m', '15m', '30m', '60m', 
+                '90m', '1h', '1d', '5d', '1wk', '1mo', 
+                '3mo'],
+
+            'intrumentos':['AAPL', 'GIGA', 'AMZN', 'TSLA', 'MSFT', 'NKE'],
+        }
+        return render(request, 'bolsa.html', context)
+ 
+    # df = financial(desde, hasta)
+
+   
 
 
 con.close()
