@@ -9,18 +9,22 @@
       type="text"
       class="form-control"
       id="validationDefault01"
-      placeholder="2010-07-01"
+      placeholder="aaaa-mm-dd"
+      name="desde"
       value=""
       required
     />
   </div>
   <div class="col-md-2">
-    <label for="validationDefault02" class="form-label">Hasta</label>
+    <label for="validationDefault02" class="form-label" name="hasta"
+      >Hasta</label
+    >
     <input
       type="text"
       class="form-control"
       id="validationDefault02"
-      placeholder="2023-05-18"
+      placeholder="aaa-mm-dd"
+      name="hasta"
       value=""
       required
     />
@@ -28,36 +32,29 @@
 
   <div class="col-md-2">
     <label for="validationDefault03" class="form-label">Intervalos</label>
-    <select type="text" class="form-select" id="validationDefault03" required>
-      <option selected disabled value="">{{intervalos}}</option>
-      <option>...</option>
+    <select
+      type="text"
+      class="form-select"
+      id="validationDefault03"
+      name="intervalo"
+      required
+    >
+      <option selected disabled value="">Seleccione frecuencia</option>
+      {% for intervalo in intervalos %}
+      <option>{{intervalo}}</option>
+      {% endfor %}
     </select>
   </div>
-  <div class="col-md-2">
-    <label for="validationDefault04" class="form-label">State</label>
-    <select class="form-select" id="validationDefault04" required>
-      <option selected disabled value="">Choose...</option>
-      <option>...</option>
+  <!-- <div class="col-md-2">
+    <label for="validationDefault04" class="form-label">Instrumento</label>
+    <select type="text" class="form-select" id="validationDefault04" required>
+      <option selected disabled value="">{{instrumentos}}</option>
+      {% for instrumento in instrumentos %}
+      <option>{{instrumentos}}</option>
+      {% endfor %}
     </select>
-  </div>
-  <div class="col-md-3">
-    <label for="validationDefault05" class="form-label">Zip</label>
-    <input type="text" class="form-control" id="validationDefault05" required />
-  </div>
-  <div class="col-12">
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        value=""
-        id="invalidCheck2"
-        required
-      />
-      <label class="form-check-label" for="invalidCheck2">
-        Agree to terms and conditions
-      </label>
-    </div>
-  </div>
+  </div> -->
+
   <div class="col-12">
     <button class="btn btn-primary" type="submit">Submit form</button>
   </div>
