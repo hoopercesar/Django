@@ -65,8 +65,7 @@ def codificado():
 def financial(start, end):
     tsla = yf.Ticker('TSLA')
     data = yf.download("TSLA", interval = "1d", start=start, end=end)
-    # "2022-01-01"
-    # "2023-01-01"
+
     return data
 
 
