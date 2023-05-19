@@ -201,8 +201,9 @@ def resumen(request):
 
 def bolsa(request):
     df = financial('2022-01-01', "2023-05-01")
+
     
-    print(request.method)
+    print(request.POST.get('validationDefault02'))
 
     y1 = list(df.Close)
     t = df.index  #np.arange(0, 115)   
