@@ -200,11 +200,16 @@ def resumen(request):
 
 
 def bolsa(request):
+    instrumentos = ['AAPL', 'GIGA', 'AMZN', 'TSLA', 'MSFT', 'NKE']
+    intervalos = ['1m', '2m', '5m', '15m', '30m', '60m', 
+                '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo']
     
     if request.method == 'POST':
         desde = request.POST.get('desde')
         hasta = request.POST.get('hasta')
-        df = financial(desde, hasta)
+        intervalo = request.POST.get('intervalo')
+        instrumento = request.POST.get('instrumento')
+        df = financial(desde, hasta, intervalo, instrumento)
 
         y1 = list(df.Close)
         t = df.index  #np.arange(0, 115)   
@@ -216,12 +221,12 @@ def bolsa(request):
             name='CLOSE'
         )
 
-        y2 = list(df.High)
+        y2 = list(df.Open)
         trace2 = go.Scatter(
             x = t,
             y = y2,
             mode = 'lines',
-            name = 'HIGH'
+            name = 'OPEN'
         )
 
         data = [trace1, trace2]
@@ -232,24 +237,16 @@ def bolsa(request):
         
         context = {
             'plot_div': plot_div,
-            'intervalos': [
-                '1m', '2m', '5m', '15m', '30m', '60m', 
-                '90m', '1h', '1d', '5d', '1wk', '1mo', 
-                '3mo'],
-
-            'intrumentos':['AAPL', 'GIGA', 'AMZN', 'TSLA', 'MSFT', 'NKE'],
+            'intervalos': intervalos,
+            'instrumentos': instrumentos,
         }
      
         return render(request, 'bolsa.html', context)
     else:
         context = {
             'plot_div': 'Seleccione para obtener información',
-            'intervalos': [
-                '1m', '2m', '5m', '15m', '30m', '60m', 
-                '90m', '1h', '1d', '5d', '1wk', '1mo', 
-                '3mo'],
-
-            'intrumentos':['AAPL', 'GIGA', 'AMZN', 'TSLA', 'MSFT', 'NKE'],
+            'intervalos': intervalos,
+            'instrumentos':instrumentos,
         }
         return render(request, 'bolsa.html', context)
  
