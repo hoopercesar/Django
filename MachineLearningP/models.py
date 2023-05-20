@@ -62,9 +62,9 @@ def codificador(tabla):
 def codificado():
     return codificador(tabla)
 
-def financial(start, end, intervalo):
-    tsla = yf.Ticker('TSLA')
-    data = yf.download("TSLA", interval = intervalo, start=start, end=end)
+def financial(start, end, intervalo, instrumento):
+    tsla = yf.Ticker(instrumento)
+    data = yf.download(instrumento, interval = intervalo, start=start, end=end)
 
     return data
 
