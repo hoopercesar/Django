@@ -45,15 +45,21 @@
       {% endfor %}
     </select>
   </div>
-  <!-- <div class="col-md-2">
+  <div class="col-md-2">
     <label for="validationDefault04" class="form-label">Instrumento</label>
-    <select type="text" class="form-select" id="validationDefault04" required>
-      <option selected disabled value="">{{instrumentos}}</option>
+    <select
+      type="text"
+      class="form-select"
+      id="validationDefault04"
+      name="instrumento"
+      required
+    >
+      <option selected disabled value="">Seleccione Instrumento</option>
       {% for instrumento in instrumentos %}
-      <option>{{instrumentos}}</option>
+      <option>{{instrumento}}</option>
       {% endfor %}
     </select>
-  </div> -->
+  </div>
 
   <div class="col-12">
     <button class="btn btn-primary" type="submit">Submit form</button>
