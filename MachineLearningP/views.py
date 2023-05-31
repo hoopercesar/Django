@@ -252,7 +252,27 @@ def bolsa(request):
  
     # df = financial(desde, hasta)
 
-   
+
+def rangeBar(request):
+    print('hola')
+    layout = go.Layout(title='Range Bar', height=700)
+    df = financial("2023-05-05", "2023-05-10", "5m", "CME")
+    fig = go.Figure(data=go.Ohlc(x=df.index,
+                                    open=df.Open,
+                                    high=df.High,
+                                    low=np.zeros(len(df.Low)),
+                                    close=df.Close),
+                                    layout=layout)
+
+    fig.update(layout_xaxis_rangeslider_visible=False)
+    plot_div = plotly.offline.plot(fig, auto_open=False, output_type='div')
+    context = {
+            'plot_div': plot_div,
+            'titulo': 'éste es un título',
+        }
+    
+
+    return render(request, 'rangebar.html', context)
 
 
 con.close()
