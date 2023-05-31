@@ -68,5 +68,26 @@ def financial(start, end, intervalo, instrumento):
 
     return data
 
+def creaRangeBar(close, umbral):
+    i=0
+    j=1
+    li=[]
+    arreglo = []
+    threshold = umbral
+
+    while (j<len(close)):
+        dif = abs(close[i] - close[j])
+        
+        if dif <= threshold:
+            j += 1
+        else:
+            arr = tuple(close[i:j+1])
+            i = j+1
+            j = j+2
+            li.append(arr)
+    
+    for arreglo in li:
+
+    return li
 
 print(pd.__version__)
