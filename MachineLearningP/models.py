@@ -74,7 +74,6 @@ def creaRangeBar(close, umbral):
     li=[]
     arreglo = []
     threshold = umbral
-
     while (j<len(close)):
         dif = abs(close[i] - close[j])
         
@@ -86,8 +85,11 @@ def creaRangeBar(close, umbral):
             j = j+2
             li.append(arr)
     
-    for arreglo in li:
+    for lista in li:
+        arreglo.append(tuple(lista[0], max(lista), min(lista), lista[-1]))
 
-    return li
+        
+
+    return arreglo
 
 print(pd.__version__)
