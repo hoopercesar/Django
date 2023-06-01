@@ -5,7 +5,7 @@ import numpy as np
 import sqlite3
 import os
 from collections import Counter
-from .models import codificado, financial
+from .models import codificado, financial, creaRangeBar
 
 import dash
 from .graficos import graficoSegunFecha
@@ -254,13 +254,15 @@ def bolsa(request):
 
 
 def rangeBar(request):
-    print('hola')
     layout = go.Layout(title='Range Bar', height=700)
     df = financial("2023-05-05", "2023-05-10", "5m", "CME")
+    rangebar = creaRangeBar(df.Close)
+
+
     fig = go.Figure(data=go.Ohlc(x=df.index,
                                     open=df.Open,
                                     high=df.High,
-                                    low=np.zeros(len(df.Low)),
+                                    low=df.Low,
                                     close=df.Close),
                                     layout=layout)
 
